@@ -15,7 +15,6 @@ public class NameFinder {
 			System.out.println();
 			
 			nf.printInfo();
-			//nf.quit(); // not working for some reason.
 		}
 	}
 	
@@ -34,20 +33,6 @@ public class NameFinder {
 		return id;
 	}
 	
-	public String getURL(String ID) {
-		/**
-		 * puts together the url to go to.
-		 * @param ID 	the email ID of the person
-		 * @return 		the url to go to. 
-		 * 
-		 * somewhat pointless method
-		 */
-		
-		String emailID = new String(ID);
-		String baseURL = new String("http://www.ecs.soton.ac.uk/people/");
-		
-		return baseURL + emailID;
-	}
 	
 	public Boolean testID(String ID) { 
 		/**
@@ -113,24 +98,20 @@ public class NameFinder {
 	
 	public void printInfo() throws Exception {
 		try {
-					
+			
 			String ID = nf.getEmailId(); 	// get the ID
 			Boolean test = nf.testID(ID);	// find out if ID is maybe real
 			Map attr;
-			String underline = "=";
-		
 		
 			if (test) { // id might be real
-				String url = nf.getURL(ID);
-				String vcard = nf.getHTML(url);
+				String vcard = nf.getHTML("http://www.ecs.soton.ac.uk/people/"+ID);
 			
 				attr = nf.processVCARD(vcard);
-				//System.out.println(ID);
 				System.out.println();
 				Iterator it = attr.entrySet().iterator();
 				while (it.hasNext()) {
 					Map.Entry p = (Map.Entry)it.next();
-					System.out.println(p.getKey() + " : " + p.getValue());
+					System.out.printf("%12s : %s %n",p.getKey(), p.getValue());
 					it.remove();
 				}
 			} else {
@@ -140,25 +121,5 @@ public class NameFinder {
 		} catch (StringIndexOutOfBoundsException e) {
 			System.out.println("This page does not exist.");
 		}
-	}
-	
-	public void quit() {
-		/**
-		 * For use when in a loop. Quits the program is 'y' or 'Y' is given.
-		 * else, continues.
-		 */
-		System.out.println("Do you want to quit? y/n");
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String in;
-		in = null;
-		try {
-			in = br.readLine();
-		} catch (IOException e) {
-			System.err.println("INPUT ERROR");
-		}
-		if (in.equals('y') || in.equals('Y')) {
-			System.exit(0);
-		}
-	}
-		
+	}	
 }
