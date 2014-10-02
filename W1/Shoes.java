@@ -54,7 +54,8 @@ public class Shoes {
 			String jd = null;
 			try {
 				jd = cr.readLine();
-				if (!(jd.equals("shoes") || jd.equals("Shoes") || jd.equals("SHOES"))) {
+				jd = jd.toLowerCase();
+				if (!(jd.equals("shoes"))) {
 					System.out.println("You were meant to type shoes. But it doesn't really matter.");
 				} 
 			} catch (IOException e) {
