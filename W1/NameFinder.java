@@ -1,8 +1,9 @@
 import java.io.*;
 import java.net.*;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
+
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class NameFinder {
 	
@@ -15,7 +16,7 @@ public class NameFinder {
 			System.out.println();
 			
 			nf.printInfo();
-		}
+		}		
 	}
 	
 	public String getEmailId() {
@@ -48,9 +49,9 @@ public class NameFinder {
 	
 	public String getHTML(String url) throws Exception {
 		/** 
-		 * Gets the vcard div from  the HTML source from a page.
+		 * Gets the HTML source from a page.
 		 * @param 	url		url to get source from
-		 * @return 			vcard div line
+		 * @return 			html source
 		 */
 		URL userURL = new URL(url);
 		BufferedReader br = new BufferedReader(new InputStreamReader(userURL.openStream()));
@@ -59,40 +60,41 @@ public class NameFinder {
 		String vcard = new String("");
 		
 		while ((line = br.readLine()) != null) {
-			
-			if (line.indexOf("vcard") > 0) {
-				vcard = line;			
-			}
+			vcard = vcard + line;
 		}
 		return vcard;
 	}
 	
-	public Map processVCARD(String vcard) {
+	public Map processHTML(String html) {
 		/** 
 		 * Processes vcard div from getHTML().
 		 * @param vcard		the output of getHTML
-		 * @return			dictionary about the person.
+		 * @return			dictionary about the person
 		 * 
-		 * This is quite messy, and i'm sure there is a better way.
-		 * But it works.
+		 * Changed to use regex because it looks neater
+		 * And it's probably more efficient
 		 */
-		Map<String, String> attributes = new HashMap<String, String>();
 		
-		// find name
-		int nameIndex = vcard.indexOf("'>")+2; //find name
-		int facultyIndex = vcard.indexOf("organization-unit")+19; //find faculty
-		int roleIndex = vcard.indexOf("role")+6; //find role
-		int extIndex = vcard.indexOf("Extension")+20; //find extension
-		int phoneIndex = vcard.indexOf("telephone\">")+11; //find phone
+		Map<String, String> attributes = new LinkedHashMap<String, String>();
 		
-		if (nameIndex > 0) { // only do it if they actually exist
-			attributes.put("Name", vcard.substring(nameIndex, vcard.indexOf("<", nameIndex)));
-			attributes.put("Faculty", vcard.substring(facultyIndex, vcard.indexOf("<", facultyIndex)));
-			attributes.put("Role", vcard.substring(roleIndex, vcard.indexOf("<", roleIndex)));
-			attributes.put("Extension", vcard.substring(extIndex, vcard.indexOf("<", extIndex)));
-			attributes.put("Telephone", vcard.substring(phoneIndex, vcard.indexOf("<", phoneIndex)));
+		// First grab the name
+		Matcher name = Pattern.compile("<meta content=\"(.*?)\".*?>").matcher(html);
+		while (name.find()) {
+			String t = name.group(1);
+			attributes.put("Name", t);
+		}		
+		
+		// Now grab other attributes
+		String[] headers = {"organization-unit", "email", "role", "organization-name", "country-name",   "telephone", "url"};
+		String[] headerNames = {"Faculty", "Email", "Role", "University", "Country", "Telephone", "Website"};
+		for (int i = 0; i<headers.length; i++) {
+			Matcher p = Pattern.compile("<span ((class|itemprop)=[\'\"]"+headers[i]+"[\'\"]).*?>(.*?)</span>").matcher(html);
+		
+			while (p.find()) {
+				String t = p.group(3);
+				attributes.put(headerNames[i], t);
+			}
 		}
-
 		return attributes;
 	}
 	
@@ -104,21 +106,27 @@ public class NameFinder {
 			Map attr;
 		
 			if (test) { // id might be real
-				String vcard = nf.getHTML("http://www.ecs.soton.ac.uk/people/"+ID);
+				String html = nf.getHTML("http://www.ecs.soton.ac.uk/people/"+ID);
 			
-				attr = nf.processVCARD(vcard);
-				System.out.println();
-				Iterator it = attr.entrySet().iterator();
-				while (it.hasNext()) {
-					Map.Entry p = (Map.Entry)it.next();
-					System.out.printf("%12s : %s %n",p.getKey(), p.getValue());
-					it.remove();
+				attr = nf.processHTML(html);
+				if (attr.get("Name").equals(null) || attr.get("Name").equals("")) {
+					System.out.println();
+					System.out.println("This page does not exist");
+				} else {
+					System.out.println();
+					//System.out.println(attr); //for testing uncomment this line and comment out below.
+					Iterator it = attr.entrySet().iterator();
+					while (it.hasNext()) {
+						Map.Entry p = (Map.Entry)it.next();
+						System.out.printf("%12s : %s %n",p.getKey(), p.getValue());
+						it.remove();
+					}
 				}
 			} else {
 				System.out.println("I'm sorry, that email ID doesn't look real. Please try another.");
 			}	
 			System.out.println();
-		} catch (StringIndexOutOfBoundsException e) {
+		} catch (StringIndexOutOfBoundsException e) { // not sure if i need this anymore
 			System.out.println("This page does not exist.");
 		}
 	}	
