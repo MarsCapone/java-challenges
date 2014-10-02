@@ -57,12 +57,12 @@ public class NameFinder {
 		BufferedReader br = new BufferedReader(new InputStreamReader(userURL.openStream()));
 		
 		String line;
-		String vcard = new String("");
+		String html = new String("");
 		
 		while ((line = br.readLine()) != null) {
-			vcard = vcard + line;
+			html = html + line;
 		}
-		return vcard;
+		return html;
 	}
 	
 	public Map processHTML(String html) {
