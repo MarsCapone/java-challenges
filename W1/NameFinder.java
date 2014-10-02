@@ -99,8 +99,10 @@ public class NameFinder {
 	}
 	
 	public void printInfo() throws Exception {
+		/**
+		 * Neatly prints everything.
+		 */
 		try {
-			
 			String ID = nf.getEmailId(); 	// get the ID
 			Boolean test = nf.testID(ID);	// find out if ID is maybe real
 			Map attr;
