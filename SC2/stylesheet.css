@@ -1,0 +1,21 @@
+/* standard types */
+body {
+    font-family: monospace;
+    font-size: 10pt;
+    color: black;
+}
+
+/* classes */
+.code {
+    width: auto;
+    float: left;
+    padding: 5px;
+}
+
+.applet {
+    width: auto;
+    float: left;
+    padding: 5px;
+    border: 5px;
+    border-color: black;
+}
