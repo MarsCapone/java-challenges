@@ -33,7 +33,7 @@ public class While extends Instruction {
 			while_loop = program.subList(start_index, end_index+1);
 			this.start_index = start_index;
 			this.end_index = end_index;
-			this.varVal = varVal;
+			this.varVal = varVal.toLowerCase();
 			//this.variables = variables;
 		}
 	}
@@ -53,6 +53,6 @@ public class While extends Instruction {
 			System.out.printf("This is loop number: %d\n", loopCount); loopCount++;
 			List<ArrayList<String>> new_while_loop = while_loop.subList(1, while_loop.size());
 			new Program().lineReadLoop(new_while_loop);
-		} while (THE_VARIABLES.get(varVal) != 0);
+		} while (THE_VARIABLES.get(varVal.toLowerCase()) != 0);
 	} 
 }

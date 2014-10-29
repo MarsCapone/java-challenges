@@ -18,7 +18,7 @@ public class Program {
 			StringTokenizer st = new StringTokenizer(line, ";=,.:@<>?/\"£$%^&*() 	", false); //StringTokenizer with delimiters 
 			ArrayList<String> statement = new ArrayList<String>();
 			while (st.hasMoreTokens()) {
-				statement.add(st.nextToken());
+				statement.add(st.nextToken().toLowerCase());
 			}
 			allStatements.add(statement);
 		}
@@ -35,7 +35,7 @@ public class Program {
 		
 		// process the file into an ArrayList of ArrayLists of Strings
 		ArrayList<ArrayList<String>> file = load(bbFile);
-		
+		System.out.println();
 		print.neatPrint(); // print variables if there were any from the command line.
 		lineReadLoop(file);
 	}
@@ -76,9 +76,7 @@ public class Program {
 						ArrayList<String> AL = whileFile.get(j);
 						if (AL.get(0).equals("while")) {
 							while_start = j; // and set to variables
-							break;
-						} 
-						if (AL.get(0).equals("end")) {
+						} else if (AL.get(0).equals("end")) {
 							while_end = j;
 						}
 					}
@@ -107,11 +105,11 @@ public class Program {
 			String[] keyval = arg.split(" ");
 			for (String key: keyval) {
 				String[] pair = key.split("=");
-				System.out.printf(" %s %s %n", pair[0], pair[1]);
-				new Program().THE_VARIABLES.put(pair[0].toLowerCase, new Integer(pair[1]));
+				System.out.printf(" %s %s %n", pair[0].toLowerCase(), pair[1]);
+				new Program().THE_VARIABLES.put(pair[0].toLowerCase(), new Integer(pair[1]));
 			}
 		}
-		
+		System.out.println(new Program().THE_VARIABLES);
 		System.out.println("=============================\n\n"); //so we can see where different instances start and end.
 		
 		new Program().run();
