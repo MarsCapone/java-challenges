@@ -8,7 +8,7 @@ public class Instruction extends Statement {
 	public void init(ArrayList<String> line) {
 		String variable = (String)line.get(1);
 		Integer value = new Integer(line.get(2));
-		THE_VARIABLES.put(variable, value);
+		THE_VARIABLES.put(variable.toLowerCase(), value);
 	}
 	
 	public void incr(ArrayList<String> line) {

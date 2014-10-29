@@ -108,7 +108,7 @@ public class Program {
 			for (String key: keyval) {
 				String[] pair = key.split("=");
 				System.out.printf(" %s %s %n", pair[0], pair[1]);
-				new Program().THE_VARIABLES.put(pair[0], new Integer(pair[1]));
+				new Program().THE_VARIABLES.put(pair[0].toLowerCase, new Integer(pair[1]));
 			}
 		}
 		
