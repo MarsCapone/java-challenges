@@ -20,14 +20,12 @@ public class Printing {
 	}
 	
 	public void neatPrint(ArrayList<String> line) {
-		System.out.println("Current Line: ");
-		System.out.println(" "+line.toString());
+		System.out.println("Line: "+line.toString());
 		Set variableSet = THE_VARIABLES.entrySet();
-		System.out.println("Current Variables: ");
 		Iterator it = variableSet.iterator();
 		while (it.hasNext()) {
 			Map.Entry pairs = (Map.Entry)it.next();
-			System.out.printf("	%s	:	%d %n", pairs.getKey(), pairs.getValue());
+			System.out.printf("Variable: %s | Value: %d %n", pairs.getKey(), pairs.getValue());
 		}
 	}
 }
