@@ -1,0 +1,27 @@
+Space Cadets 4
+BareBones Compiler
+
+clear <var>;	Set the variable to zero.
+incr <var>;	    Increment the value of the variable.
+decr <var>;	    Decrement the value of the variable, except that if the value was already zero, it remains zero.
+while <var> not 0 do; 
+<statements> 
+end;	               Loop while the variable's value is not zero. May contain one or more statements, including nested while loops. If the statements do not alter the value of the loop variable, the loop will never terminate.
+copy <var> to <var>;	   Copy one variable to another, preserving value of original.
+init <var> = <int>;     initialize variable
+
+class Process
+    takes file
+    StringTokenizer(str, ';')
+    return arraylist containing statements
+
+class BareBones
+    given a single barebones statement
+    processes it in some way
+    return tuple (command, value)
+    or something
+
+class Main
+    loops through arraylist
+    parses statements
+    prints out their values

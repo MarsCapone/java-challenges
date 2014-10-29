@@ -12,14 +12,15 @@ public class MouseTextControl extends Applet implements ActionListener, MouseMot
 	public void init() {
 		width = getSize().width; height = getSize().height;
 		x = width/2; y = height/2;
-		//textEntry = new TextField("Enter text", 20);
+		textEntry = new TextField("Enter text", 20);
 		enter = new Button("ENTER");
 		message = "Hello World!";
 		
 		addMouseMotionListener(this);
-		
-		//add(textEntry); 
-		//add(enter);
+		enter.addActionListener(this);
+
+		add(textEntry); 
+		add(enter);
 	}
 	
 	public void paint(Graphics g) {
@@ -32,23 +33,17 @@ public class MouseTextControl extends Applet implements ActionListener, MouseMot
 		repaint();
 		e.consume();
 	}
-
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 	
-	//public void actionPerformed(ActionEvent e) {
-	//	if (e.getSource() == enter) {
-	//		message = textEntry.getText();
-	//	}
-	//	repaint();
-	//}
+	@Override
+	public void mouseDragged(MouseEvent e) {}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == enter) {
+			message = textEntry.getText();
+			textEntry.setText("");
+		}
+		repaint();
+		
+	}
 }

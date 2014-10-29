@@ -1,0 +1,13 @@
+init X = 8;
+init Y = 21;
+incr X;
+incr X;
+decr Y;
+clear Y;
+copy X Y;
+while X not 0 do;
+incr Y; 
+decr X;
+end;
+init Z = 30;
+init A = 30;
