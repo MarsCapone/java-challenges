@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Printing {
 	public static HashMap<String,Integer> THE_VARIABLES = new Program().THE_VARIABLES;
 	
-	
+	/* Neatly-ish prints Variables and Values of THE_VARIABLES. */
 	public void neatPrint() {
 		Set variableSet = THE_VARIABLES.entrySet();
 		Iterator it = variableSet.iterator();
@@ -18,6 +18,9 @@ public class Printing {
 		}
 	}
 	
+	/* Neatly-ish prints Variables and Values and the current line
+	 * @param line 	ArrayList<String> of a line as in Program.java:97
+	 */
 	public void neatPrint(ArrayList<String> line) {
 		System.out.println("Line: "+line.toString());
 		Set variableSet = THE_VARIABLES.entrySet();

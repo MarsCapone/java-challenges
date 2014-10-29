@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/* Contains methods for most Bare Bones instructions. */
 public class Instruction extends Statement {
 	
 	public static HashMap<String,Integer> THE_VARIABLES = new Program().THE_VARIABLES;

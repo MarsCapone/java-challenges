@@ -1,7 +1,6 @@
 import java.util.HashMap;
 
-/* Simple class to make a variable. Barely worth writing, but 
- * I like to separate things.
+/* Simple class to make a variable. 
  */
 public class Variable {
 	public HashMap<String,Integer> variables;

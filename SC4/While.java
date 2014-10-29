@@ -1,17 +1,10 @@
-/* Implement a BareBones While loop.
- * 	
- *		while <var> not 0 do; 
- * 		<statements> 
- * 		end;
- * 
- * take index of start of while loop, end of while loop, 
- * and comparison value.
- */
-
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 
+/* Class to implement a while loop.
+ * A recursive solution.
+ */
 public class While extends Instruction {
 	private List<ArrayList<String>> while_loop; // contains just the while loop, a subset of the main file
 	private int start_index;
