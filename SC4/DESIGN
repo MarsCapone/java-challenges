@@ -10,18 +10,24 @@ end;	               Loop while the variable's value is not zero. May contain one
 copy <var> to <var>;	   Copy one variable to another, preserving value of original.
 init <var> = <int>;     initialize variable
 
-class Process
-    takes file
-    StringTokenizer(str, ';')
-    return arraylist containing statements
+class Program
+	contains main variables
+	loads the file
+	uses other classes to run the file
 
-class BareBones
-    given a single barebones statement
-    processes it in some way
-    return tuple (command, value)
-    or something
+class Variable
+	makes new HashMaps to contain variables.
+	can do without, but I was getting a bit lost in the code.
+	
+class Instruction extends Statement
+	contains methods for:
+	init, inc, decr, clear, copy
 
-class Main
-    loops through arraylist
-    parses statements
-    prints out their values
+class While
+	implements while loop recursively
+	feeds statements of loop back into Program.
+
+class Statement
+	some basic HashMap methods.
+	possibly unused atm.
+
