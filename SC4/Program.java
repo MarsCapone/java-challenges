@@ -15,7 +15,7 @@ public class Program {
 		ArrayList<ArrayList<String>> allStatements = new ArrayList<ArrayList<String>>();
 		String line;
 		while ((line = br.readLine()) != null) {
-			StringTokenizer st = new StringTokenizer(line, " ;=,.:@", false);
+			StringTokenizer st = new StringTokenizer(line, ";=,.:@<>?/\"£$%^&*() 	", false); //StringTokenizer with delimiters 
 			ArrayList<String> statement = new ArrayList<String>();
 			while (st.hasMoreTokens()) {
 				statement.add(st.nextToken());
@@ -26,11 +26,17 @@ public class Program {
 	}
 	/* run the things that make the program actually go. */
 	public void run() throws Exception {
+		Printing print = new Printing();
+		
+		// get the file to process
 		Scanner in = new Scanner(System.in);
 		System.out.println("Enter File: ");
 		String bbFile = in.nextLine();
+		
+		// process the file into an ArrayList of ArrayLists of Strings
 		ArrayList<ArrayList<String>> file = load(bbFile);
 		
+		print.neatPrint(); // print variables if there were any from the command line.
 		lineReadLoop(file);
 	}
 	
@@ -43,6 +49,7 @@ public class Program {
 	 * 					Each String of the ArrayList is a key word in the line.
 	 */
 	public void lineReadLoop(List<ArrayList<String>> inFile) {
+		Printing print = new Printing();
 		Instruction inst = new Instruction();
 		int while_start=0; int while_end=0;
 		List<ArrayList<String>> file = new ArrayList<ArrayList<String>>(inFile);
@@ -69,7 +76,9 @@ public class Program {
 						ArrayList<String> AL = whileFile.get(j);
 						if (AL.get(0).equals("while")) {
 							while_start = j; // and set to variables
-						} else if (AL.get(0).equals("end")) {
+							break;
+						} 
+						if (AL.get(0).equals("end")) {
 							while_end = j;
 						}
 					}
@@ -87,13 +96,24 @@ public class Program {
 				default: System.out.printf("UNSUPPORTED 	: 	%s \n", line); // want to see which line is unsupported
 					break;
 			}
-			System.out.println(THE_VARIABLES); //see the variables and which have changed
+			print.neatPrint(line);
 			System.out.println();
 		}
 	}
 	
 	public static void main(String args[]) throws Exception {
+		// Process any command line arguments
+		for (String arg: args) {
+			String[] keyval = arg.split(" ");
+			for (String key: keyval) {
+				String[] pair = key.split("=");
+				System.out.printf(" %s %s %n", pair[0], pair[1]);
+				new Program().THE_VARIABLES.put(pair[0], new Integer(pair[1]));
+			}
+		}
+		
 		System.out.println("=============================\n\n"); //so we can see where different instances start and end.
+		
 		new Program().run();
 	}
 }

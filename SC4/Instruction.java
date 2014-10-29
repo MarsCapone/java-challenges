@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class Instruction extends Statement {
 	
-	public HashMap<String,Integer> THE_VARIABLES = new Program().THE_VARIABLES;
+	public static HashMap<String,Integer> THE_VARIABLES = new Program().THE_VARIABLES;
 	
 	public void init(ArrayList<String> line) {
 		String variable = (String)line.get(1);

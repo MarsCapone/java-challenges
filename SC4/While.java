@@ -17,7 +17,7 @@ public class While extends Instruction {
 	private int start_index;
 	private int end_index;
 	private String varVal;
-	public HashMap<String,Integer> THE_VARIABLES = new Program().THE_VARIABLES;
+	public static HashMap<String,Integer> THE_VARIABLES = new Program().THE_VARIABLES;
 	
 	
 	/* While Constructor
