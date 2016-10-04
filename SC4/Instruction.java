@@ -37,4 +37,5 @@ public class Instruction extends Statement {
 		Integer val1 = new Integer(THE_VARIABLES.get(key1));
 		THE_VARIABLES.put(key2, val1);
 	}
+
 }
